@@ -6,6 +6,7 @@ Created on Tue Feb 12 18:16:46 2019
 @author: cameron
 """
 
+from sklearn.metrics import classification_report
 import pandas as pd
 import math
 
@@ -123,12 +124,19 @@ tests = {'t1' : Person("m-001-05"), 't2' : Person("m-002-05"),
          't5' : Person("m-005-05"), 't6' : Person("w-001-05"),
          't7' : Person("w-002-05"), 't8' : Person("w-003-05"),
          't9' : Person("w-004-05"), 't10' : Person("w-005-05")}
-
+y_pred = []
 for k1 in tests:
     nearestNeighbor='m1'
     for k2 in samples:
         if samples[k2].compare(tests[k1]) < samples[nearestNeighbor].compare(tests[k1]):
             nearestNeighbor = k2
+    y_pred.append(nearestNeighbor)
     print(k1 + "'s nearest neighbor is: " + nearestNeighbor)
-    
+
+y_true = []
+for key in samples:
+    y_true.append(key)
+
+#finally we run a classification report
+print(classification_report(y_true, y_pred))
 
